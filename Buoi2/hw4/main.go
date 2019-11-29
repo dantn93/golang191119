@@ -53,11 +53,12 @@ func main() {
 		end := time.Now()
 
 		fmt.Printf("\nSpend: %d miliseconds\n", end.Sub(begin).Nanoseconds()/1000000)
-		if result {
-			fmt.Fprintf(w, "true")
-		} else {
-			fmt.Fprintf(w, "false")
+		res, err := ParseData(result)
+		if err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
+			fmt.Fprintf(w, err.Error())
 		}
+		fmt.Fprintf(w, res)
 	})
 
 	http.HandleFunc("/reverse", func(w http.ResponseWriter, r *http.Request) {

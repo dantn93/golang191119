@@ -10,9 +10,7 @@ import (
 	"github.com/patrickmn/go-cache"
 )
 
-func Contain(c *cache.Cache, intSlice *[]int, element int, t time.Duration) bool {
-	defer Caching(c, intSlice, element, t)
-
+func Contain(c *cache.Cache, intSlice *[]int, element int, t time.Duration) interface{} {
 	byteListNumber := []byte{}
 	l, found := c.Get("intSlice")
 	if found {
@@ -32,13 +30,20 @@ func Contain(c *cache.Cache, intSlice *[]int, element int, t time.Duration) bool
 
 	//Check slice in caching is the same as input
 	if cmp.Equal(byteListNumber, byteIntSlice) {
-		iresult, found := c.Get("element")
-		if found && iresult == element {
-			return true
+		e, found := c.Get("element")
+		if found && e == element {
+			result, found := c.Get("result")
+			if found {
+				return result
+			}
 		}
-		return FindElementInSlice(intSlice, element)
+		result := FindElementInSlice(intSlice, element)
+		Caching(c, intSlice, element, result, t)
+		return result
 	} else {
-		return FindElementInSlice(intSlice, element)
+		result := FindElementInSlice(intSlice, element)
+		Caching(c, intSlice, element, result, t)
+		return result
 	}
 }
 
@@ -52,7 +57,8 @@ func FindElementInSlice(intSlice *[]int, element int) bool {
 	return false
 }
 
-func Caching(c *cache.Cache, intSlice *[]int, element int, t time.Duration) {
+func Caching(c *cache.Cache, intSlice *[]int, element int, result bool, t time.Duration) {
 	c.Set("intSlice", *intSlice, t)
 	c.Set("element", element, t)
+	c.Set("result", result, t)
 }
