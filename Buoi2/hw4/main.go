@@ -8,8 +8,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/golang191119/Buoi2/hw4/lodash/contain"
-	"github.com/golang191119/Buoi2/hw4/lodash/reverse"
+	"github.com/golang191119/Buoi2/hw4/lodash"
 
 	"github.com/patrickmn/go-cache"
 )
@@ -50,7 +49,7 @@ func main() {
 
 		// Find element in list
 		begin := time.Now()
-		result := contain.Contain(c, &req.List, req.Element, cache.DefaultExpiration)
+		result := lodash.Contain(c, &req.List, req.Element, cache.DefaultExpiration)
 		end := time.Now()
 
 		fmt.Printf("\nSpend: %d miliseconds\n", end.Sub(begin).Nanoseconds()/1000000)
@@ -77,7 +76,7 @@ func main() {
 		}
 
 		//reverse slice
-		result, err := ParseData(reverse.Reverse(req.List))
+		result, err := ParseData(lodash.Reverse(req.List))
 		if err != nil {
 			log.Println(err.Error())
 			w.WriteHeader(http.StatusInternalServerError)

@@ -1,4 +1,4 @@
-package contain
+package lodash
 
 import (
 	"encoding/json"
@@ -60,4 +60,12 @@ func Caching(c *cache.Cache, intSlice *[]int, element int, result bool, t time.D
 	c.Set("intSlice", *intSlice, t)
 	c.Set("element", element, t)
 	c.Set("result", result, t)
+}
+
+func Reverse(numbers []int) []int {
+	newNumbers := make([]int, len(numbers))
+	for i, j := 0, len(numbers)-1; i < j; i, j = i+1, j-1 {
+		newNumbers[i], newNumbers[j] = numbers[j], numbers[i]
+	}
+	return newNumbers
 }
