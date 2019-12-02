@@ -49,7 +49,6 @@ func Contain(c *cache.Cache, intSlice *[]int, element int, t time.Duration) inte
 
 func FindElementInSlice(intSlice *[]int, element int) bool {
 	for _, v := range *intSlice {
-		time.Sleep(10000)
 		if v == element {
 			return true
 		}

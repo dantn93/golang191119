@@ -4,11 +4,12 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
-	"lodash/contain"
-	"lodash/reverse"
 	"log"
 	"net/http"
 	"time"
+
+	"github.com/golang191119/Buoi2/hw4/lodash/contain"
+	"github.com/golang191119/Buoi2/hw4/lodash/reverse"
 
 	"github.com/patrickmn/go-cache"
 )
